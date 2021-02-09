@@ -70,7 +70,8 @@ export class AuthService {
    * returns true if the loggedin token exists
    */
   private isLoggedInCookie(): boolean {
-    return document.cookie.search('loggedin=') !== -1;
+    return true;
+    // return document.cookie.search('loggedin=') !== -1;
   }
 
   /**
@@ -98,7 +99,7 @@ export class AuthService {
    */
   public logout(): void {
     // TODO: begin saml logout workflow
-    // document.cookie = ';path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = ';path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     this.sendUserInfo(null);
   }
 
@@ -115,10 +116,12 @@ export class AuthService {
    * @param redirectPathname optional: if set will cause saml to redirect back to a different page instead of the current page after authentication.
    */
   public buildLoginLink(redirectPathname?: string): string {
+    //return window.location.pathname;
     return SAML_LOGIN_URL + (redirectPathname || window.location.pathname);
   }
 
   public buildLogoutLink() {
     // TODO: do the logout workflow
+    return SAML_LOGIN_URL + window.location.pathname;
   }
 }
